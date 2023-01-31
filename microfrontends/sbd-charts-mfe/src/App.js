@@ -9,6 +9,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
+import seedscardIcon from './assets/Framecredit-card.png';
 
 ChartJS.register(
     RadialLinearScale,
@@ -16,23 +17,34 @@ ChartJS.register(
     LineElement,
     Filler,
     Tooltip,
-    Legend
 );
 
 export function App({dataToRender}) {
   const data = {
-    labels: ['Rome', 'Milan', 'Naples', 'Florence', 'Venice', 'Turin'],
+    labels: ['Bonds', 'ETF', 'Stocks', 'Futures', 'ETC', 'CFD'],
     datasets: [
       {
-        label: '# of Failures',
         data: dataToRender,
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgb(14,104,55)',
+        borderColor: 'rgb(0,0,0)',
         borderWidth: 1,
       },
     ],
   };
-  return <Radar data={data} />;
+  return(
+  <div>
+    <div>
+      <div className="jss1">
+        <div className="jss3"><img alt="interest account icon" className="jss2"
+                                   src={seedscardIcon}/>
+          <div className="jss4">Portfolio</div>
+          <div className="jss6"><i className="fas fa-ellipsis-v"></i></div>
+        </div>
+        <Radar data={data} style={{"margin": "auto"}}/>;
+      </div>
+    </div>
+  </div>
+  )
 }
 
 export default App

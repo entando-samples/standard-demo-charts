@@ -35,6 +35,6 @@
   ],
   "name": "sbd-charts",
   "version": "0.0.1",
-  "description": "Charts Showcase for Standard Banking Demo (BFF golang, MFE react)",
+  "description": "Chart Showcase for Standard Banking Demo (BFF springboot, MFE react)",
   "type": "bundle"
 }
