@@ -40,7 +40,7 @@ export function App({dataToRender}) {
           <div className="jss4">Portfolio</div>
           <div className="jss6"><i className="fas fa-ellipsis-v"></i></div>
         </div>
-        <Radar data={data} style={{"margin": "auto"}}/>;
+        <Radar data={data} style={{"margin": "auto"}}/>
       </div>
     </div>
   </div>

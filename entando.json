@@ -1,7 +1,7 @@
 {
   "microservices": [
     {
-      "name": "sbd-charts-bff",
+      "name": "sd-charts-bff",
       "stack": "spring-boot",
       "healthCheckPath": "/api/health",
       "roles": [
@@ -11,21 +11,21 @@
   ],
   "microfrontends": [
     {
-      "name": "sbd-charts-mfe",
-      "customElement": "sbd-charts-mfe",
+      "name": "sd-charts-mfe",
+      "customElement": "sd-charts-mfe",
       "stack": "react",
       "type": "widget",
       "group": "free",
       "publicFolder": "public",
       "titles": {
-        "en": "SBD Charts",
-        "it": "SBD Charts"
+        "en": "SD Charts",
+        "it": "SD Charts"
       },
       "apiClaims": [
         {
           "name": "be-api",
           "type": "internal",
-          "serviceName": "sbd-charts-bff"
+          "serviceName": "sd-charts-bff"
         }
       ]
     }
@@ -33,8 +33,8 @@
   "svc": [
     "keycloak"
   ],
-  "name": "sbd-charts",
+  "name": "standard-demo-charts",
   "version": "0.0.1",
-  "description": "Chart Showcase for Standard Banking Demo (BFF springboot, MFE react)",
+  "description": "Chart Showcase for Standard Demo (BFF springboot, MFE react)",
   "type": "bundle"
 }

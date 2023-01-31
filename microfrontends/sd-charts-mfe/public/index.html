@@ -222,7 +222,7 @@
         <h1 class="current-page">My dashboard</h1>
         <div class="row">
             <div class="col-12 col-lg-4">
-                <sbd-charts-mfe/>
+                <sd-charts-mfe/>
             </div>
             <div class="col-12 col-lg-4"></div>
             <div class="col-12 col-lg-4"></div>
@@ -238,7 +238,7 @@
     function injectConfigIntoMfe() {
         fetch('%PUBLIC_URL%/mfe-config.json').then(async response => {
             const config = await response.text()
-            const mfeEl = document.getElementsByTagName('sbd-charts-mfe')[0]
+            const mfeEl = document.getElementsByTagName('sd-charts-mfe')[0]
             mfeEl.setAttribute('config', config)
         })
     }

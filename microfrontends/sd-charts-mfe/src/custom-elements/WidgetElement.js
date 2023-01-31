@@ -60,4 +60,4 @@ class WidgetElement extends HTMLElement {
     }
 }
 
-customElements.define('sbd-charts-mfe', WidgetElement);
+customElements.define('sd-charts-mfe', WidgetElement);
