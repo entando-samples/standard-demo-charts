@@ -1,0 +1,258 @@
+
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>My dashboard - Standard Banking Demo</title>
+
+    <meta name="viewport" content="width=device-width, user-scalable=no"/>
+
+    <meta name="description" content=""/>
+
+    <meta name="author" content=""/>
+
+    <link rel="icon" href="http://germano.k8s-entando.org/entando-de-app/favicon.png" type="image/png" />
+    <link rel="stylesheet" href="http://germano.k8s-entando.org/entando-de-app/cmsresources/static/css/all.css"> <link href="http://germano.k8s-entando.org/entando-de-app/cmsresources/static/css/bootstrap.min.css" rel="stylesheet"> <link href="http://germano.k8s-entando.org/entando-de-app/cmsresources/static/css/mdb.min.css" rel="stylesheet"> <script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" type="text/javascript" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/static/js/jquery.min.js"></script> <!-- Custom includes --> <link rel="stylesheet" href="http://germano.k8s-entando.org/entando-de-app/cmsresources/standard-demo/static/css/seed.css" rel="stylesheet"> <link rel="stylesheet" href="http://germano.k8s-entando.org/entando-de-app/cmsresources/standard-demo/static/css/media-queries.css" rel="stylesheet"> <script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" ></script></head>
+<body>
+<script>
+    (function () {
+        const consolePrefix = '[ENTANDO-KEYCLOAK]';
+        const keycloakConfigEndpoint = '/keycloak.json';
+        let keycloakConfig;
+        function dispatchKeycloakEvent(eventType) {
+            console.info(consolePrefix, 'Dispatching', eventType, 'custom event');
+            return window.dispatchEvent(new CustomEvent('keycloak', { detail: { eventType } }));
+        };
+        function initKeycloak() {
+            const keycloak = new Keycloak(keycloakConfig);
+            keycloak.onReady = function() {
+                dispatchKeycloakEvent('onReady');
+            };
+            keycloak.onAuthSuccess = function() {
+                dispatchKeycloakEvent('onAuthSuccess');
+            };
+            keycloak.onAuthError = function() {
+                dispatchKeycloakEvent('onAuthError');
+            };
+            keycloak.onAuthRefreshSuccess = function() {
+                dispatchKeycloakEvent('onAuthRefreshSuccess');
+            };
+            keycloak.onAuthRefreshError = function() {
+                dispatchKeycloakEvent('onAuthRefreshError');
+            };
+            keycloak.onAuthLogout = function() {
+                dispatchKeycloakEvent('onAuthLogout');
+            };
+            keycloak.onTokenExpired = function() {
+                dispatchKeycloakEvent('onTokenExpired');
+            };
+            function onKeycloakInitialized(isAuthenticated) {
+                if (isAuthenticated) {
+                    console.info(consolePrefix, 'Keycloak initialized, user authenticated');
+                } else {
+                    console.info(consolePrefix, 'Keycloak initialized, user not authenticated');
+                }
+            };
+            window.entando = {
+                ...(window.entando || {}),
+                keycloak,
+            };
+            window.entando.keycloak
+                .init({ onLoad: 'check-sso', silentCheckSsoRedirectUri: 'http://localhost:8080/silent-check-sso.html', promiseType: 'native', enableLogging: true })
+                .then(onKeycloakInitialized)
+                .catch(function (e) {
+                    console.error(e);
+                    console.error(consolePrefix, 'Failed to initialize Keycloak');
+                });
+        };
+        function onKeycloakScriptError(e) {
+            console.error(e);
+            console.error(consolePrefix, 'Failed to load keycloak.js script');
+        };
+        function addKeycloakScript(keycloakConfig) {
+            const script = document.createElement('script');
+            script.src = keycloakConfig['auth-server-url'] + '/js/keycloak.js';
+            script.async = true;
+            script.addEventListener('load', initKeycloak);
+            script.addEventListener('error', onKeycloakScriptError);
+            document.body.appendChild(script);
+        };
+        fetch(keycloakConfigEndpoint)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (config) {
+                keycloakConfig = config;
+                if (!keycloakConfig.clientId) {
+                    keycloakConfig.clientId = keycloakConfig.resource;
+                }
+                addKeycloakScript(keycloakConfig);
+            })
+            .catch(function (e) {
+                console.error(e);
+                console.error(consolePrefix, 'Failed to fetch Keycloak configuration');
+            });
+    })();
+</script>
+
+<div class="custom-navbar">
+    <!--Navbar-->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light">
+        <!-- Navbar brand -->
+        <a class="logo" href="http://germano.k8s-entando.org/entando-de-app/en/homepagesd.page" ><img src="http://germano.k8s-entando.org/entando-de-app/cmsresources/standard-demo/static/img/seed-logo.svg" /></a>            <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile"
+                aria-controls="navbar-mobile" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="navbar-mobile">
+            <!-- Links -->
+            <ul class="navbar-nav mr-auto">
+                <!-- Dropdown -->
+                <li class="nav-item"><a class="nav-link" href="http://germano.k8s-entando.org/entando-de-app/en/homepagesd.page">Home</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Checking & Savings</a>
+                    <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                        <div class="dropdown-content-wrapper">
+                            <div class="row dropdown-wrapper">
+                                <div class="col-6 dropdown-col"><a class="checking" href="http://germano.k8s-entando.org/entando-de-app/en/interest.page"><span>Interest Checking</span></a>
+                                    <div class="savings">High Yield Savings</div>
+                                </div>
+                                <div class="col-6 dropdown-right">
+                                    <div class="debit-cards">Debit Cards</div>
+                                    <div class="send-money">Send Money</div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-around dropdown-wrapper-footer">
+                                <div class="col-6 dropdown-footer-heading"> Company
+                                    <div class="row">
+                                        <div class="col-6 dropdown-footer-content">
+                                            <div>About</div>
+                                            <div>Service</div>
+                                            <div>Careers</div>
+                                            <div>Blog</div>
+                                        </div>
+                                        <div class="col-6 dropdown-footer-content">
+                                            <div>Media</div>
+                                            <div>Terms</div>
+                                            <div>Privacy</div>
+                                            <div>Cookies</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 dropdown-footer-heading"> Customers
+                                    <div class="row">
+                                        <div class="col-12 col-lg-6 dropdown-footer-content">
+                                            <div>Travel</div>
+                                            <div>Pricing</div>
+                                            <div>Account</div>
+                                            <div>Help</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="http://germano.k8s-entando.org/entando-de-app/en/credit_card.page">Credit Cards</a></li>
+                <li class="nav-item"><a class="nav-link" href="http://germano.k8s-entando.org/entando-de-app/en/seed_insurances.page">Insurances</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://germano.k8s-entando.org/entando-de-app/en/dashboard.page">My dashboard</a>
+                </li>
+            </ul>
+            <div class="d-block d-sm-block d-md-none">
+                <div class="btn-group login-group">
+                    <button type="button" class="btn login dropdown-toggle px-3" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">        admin <span class="sr-only">admin</span>
+                    </button>
+                    <div class="dropdown-menu login-drop">
+                        <a class="dropdown-item" href="/app-builder/">           Administration        </a> <a class="dropdown-item" href="http://germano.k8s-entando.org/entando-de-app/en/manage_users.page" >       Manage Users    </a>                <a class="dropdown-item"  href="http://germano.k8s-entando.org/entando-de-app/do/logout.action">                Logout        </a></div></div>
+
+                <a class="dropdown-item d-none d-sm-block d-md-none"   admin <span class="sr-only">admin</span></a>                </div>
+        </div>
+        <div class="d-none d-lg-block d-xl-block">
+            <div class="btn-group login-group">
+                <button type="button" class="btn login dropdown-toggle px-3" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">        admin <span class="sr-only">admin</span>
+                </button>
+                <div class="dropdown-menu login-drop">
+                    <a class="dropdown-item" href="/app-builder/">           Administration        </a> <a class="dropdown-item" href="http://germano.k8s-entando.org/entando-de-app/en/manage_users.page" >       Manage Users    </a>                <a class="dropdown-item"  href="http://germano.k8s-entando.org/entando-de-app/do/logout.action">                Logout        </a></div></div>
+
+            <a class="dropdown-item d-none d-sm-block d-md-none"   admin <span class="sr-only">admin</span></a>            </div>
+        <!-- Collapsible content -->
+    </nav>
+    <div class="dashboard-container">
+        <h1 class="current-page">My dashboard</h1>
+        <div class="row">
+            <div class="col-12 col-lg-4"><script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/sd-banking/static/js/2.f8e874eb.chunk.js" ></script>
+                <script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/sd-banking/static/js/main.5767cafc.chunk.js" ></script>
+                <script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/sd-banking/static/js/runtime~main.3441d7be.js" ></script>
+
+
+
+                <sd-seeds-card-details locale="en" cardname="checking" /></div>
+            <div class="col-12 col-lg-4"><script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/sd-banking/static/dashboard-card-angular/main-es2015.0e4007af42f69f51575e.js" ></script>
+                <script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/sd-banking/static/dashboard-card-angular/main-es5.0e4007af42f69f51575e.js" ></script>
+                <script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/sd-banking/static/dashboard-card-angular/polyfills-es2015.4c80bf6ff2b243e3f48f.js" ></script>
+                <script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/sd-banking/static/dashboard-card-angular/polyfills-es5.79d4237275a85829e281.js" ></script>
+                <script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/sd-banking/static/dashboard-card-angular/runtime-es2015.1eba213af0b233498d9d.js" ></script>
+                <script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/sd-banking/static/dashboard-card-angular/runtime-es5.1eba213af0b233498d9d.js" ></script>
+
+                <link href="http://germano.k8s-entando.org/entando-de-app/cmsresources/sd-banking/static/dashboard-card-angular/styles.0e4338761429b4eb16ac.css" rel="stylesheet">
+
+
+                <sd-seeds-card-details-ng locale="en" cardname="savings" /></div>
+            <div class="col-12 col-lg-4"><script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/sd-banking/static/js/2.f8e874eb.chunk.js" ></script>
+                <script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/sd-banking/static/js/main.5767cafc.chunk.js" ></script>
+                <script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/sd-banking/static/js/runtime~main.3441d7be.js" ></script>
+
+
+
+                <sd-seeds-card-details locale="en" cardname="creditcard" /></div>
+        </div>
+        <div class="row">
+            <div class="NotificationBar">
+                <div class="NotificationBar__btn">
+                    <script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/sd-banking/static/js/main.eb037f25.js" ></script>
+
+                    <link href="http://germano.k8s-entando.org/entando-de-app/cmsresources/sd-banking/static/css/main.bd05ad46.css" rel="stylesheet">
+
+
+                    <sd-alert-bar-icon service-url="/banking/api" locale="en" icon="managealerts" title="Alerts"/>                    </div>
+                <div class="NotificationBar__btn"><img class="CheckingCard__icon" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/standard-demo/static/img/dashboard/Framepay.png"/>
+                    Pay bills
+                </div>
+                <div class="NotificationBar__btn"><img class="CheckingCard__icon" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/standard-demo/static/img/dashboard/Framemoney.png"/>
+                    Send money
+                </div>
+                <div class="NotificationBar__btn"><img class="CheckingCard__icon" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/standard-demo/static/img/dashboard/Frameinvest.png"/>
+                    Investments
+                </div>
+                <div class="NotificationBar__btn"> <script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/sd-banking/static/js/main.eb037f25.js" ></script>
+
+                    <link href="http://germano.k8s-entando.org/entando-de-app/cmsresources/sd-banking/static/css/main.bd05ad46.css" rel="stylesheet">
+
+
+                    <sd-alert-bar-icon service-url="/banking/api" locale="en" icon="viewstatements" title="View Statements"/> </div>
+                <div class="NotificationBar__btn">  <img class="CheckingCard__icon" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/standard-demo/static/img/dashboard/Frametransfer.png"/>
+                    Transfers
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/sd-banking/static/js/2.beb93da6.chunk.js" ></script>
+                <script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/sd-banking/static/js/main.3dcab97b.chunk.js" ></script>
+                <script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/sd-banking/static/js/runtime~main.9698fbd6.js" ></script>
+
+
+
+                <sd-seeds-card-transaction-table locale="en" pagination-mode="pagination" />                </div>
+        </div>
+        <div class="row">
+        </div>
+        <div class="row">
+        </div>
+    </div>
+</div>
+<script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" type="text/javascript" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/static/js/bootstrap.min.js"></script> <script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" type="text/javascript" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/static/js/mdb.min.js"></script>    <script nonce="kV2JoU5HXqbhvFLTI2TMQai96Fg8SGBuIn7QrvRKYrzUn9UUw2CKOJyySgLDhERs" type="text/javascript" src="http://germano.k8s-entando.org/entando-de-app/cmsresources/static/js/datatables.min.js"></script>
+</body>
+
+</html>

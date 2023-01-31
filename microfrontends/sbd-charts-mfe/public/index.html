@@ -1,0 +1,426 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>My dashboard - Standard Banking Demo</title>
+
+    <meta name="viewport" content="width=device-width, user-scalable=no"/>
+
+    <meta name="description" content=""/>
+
+    <meta name="author" content=""/>
+
+    <link rel="icon" href="http://germano.k8s-entando.org/entando-de-app/favicon.png" type="image/png"/>
+    <link rel="stylesheet" href="/entando-de-app/cmsresources/static/css/all.css">
+    <link href="/entando-de-app/cmsresources/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/entando-de-app/cmsresources/static/css/mdb.min.css" rel="stylesheet">
+    <script nonce="VYkyxQ0oy8U0JOT0CpSLZIvJDVDlhxDJ8wqhlgFUJGJBBAVmquqj3IwyramTkHaT" type="text/javascript"
+            src="/entando-de-app/cmsresources/static/js/jquery.min.js"></script> <!-- Custom includes -->
+    <link rel="stylesheet" href="/entando-de-app/cmsresources/standard-demo/static/css/seed.css" rel="stylesheet">
+    <link rel="stylesheet" href="/entando-de-app/cmsresources/standard-demo/static/css/media-queries.css"
+          rel="stylesheet">
+    <script nonce="VYkyxQ0oy8U0JOT0CpSLZIvJDVDlhxDJ8wqhlgFUJGJBBAVmquqj3IwyramTkHaT"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <style>
+        .jss1 {
+            height: 300px;
+            display: block !important;
+            padding: 10%;
+            background: #ffffff;
+            box-shadow: 0 0 18px rgba(0, 0, 0, 0.25);
+            transition: 0.3s ease;
+            border-radius: 20px;
+        }
+
+        .jss1:hover {
+            height: 300px;
+            padding: 10%;
+            background: #7ab7740d;
+            box-shadow: 0 0 18px #7ab774;
+            border-radius: 20px;
+        }
+
+        .jss3 {
+            display: flex;
+            position: relative;
+            align-items: baseline;
+        }
+
+        .jss3 * {
+            background-color: transparent !important;
+        }
+
+        .jss4 {
+            color: #0e6837;
+            margin: 0 20px;
+            font-size: 30px;
+            font-weight: 500;
+            line-height: 35px;
+        }
+
+        .jss5 {
+            color: #c7c7c7;
+            font-size: 16px;
+            line-height: 33px;
+        }
+
+        .jss6 {
+            top: 19%;
+            color: #c7c7c7;
+            right: 0;
+            position: absolute;
+        }
+
+        .jss7 {
+            color: #000000;
+            margin: 10% 0 0 0;
+            font-size: 50px;
+            font-weight: 500;
+        }
+
+        .jss8 {
+            color: #c7c7c7;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .jss9 {
+            color: #c7c7c7;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .jss10 {
+            color: #000000;
+            font-size: 18px;
+            font-weight: 500;
+        }
+    </style>
+    <!--<style data-jss="" data-meta="makeStyles">
+        .jss1 {
+            display: flex;
+            align-items: center;
+        }
+        .jss2 {
+            font-size: 20px;
+        }
+        .jss3 {
+            opacity: 0.9;
+            margin-right: 8px;
+        }
+        .jss4 {
+            background-color: #43a047;
+        }
+        .jss5 {
+            background-color: #d32f2f;
+        }
+        .jss6 {
+            background-color: #3f51b5;
+        }
+    </style>-->
+    <style>.seeds-card[_ngcontent-ifl-c1] {
+        background: #f2f4f7;
+        box-shadow: 0 0 18px rgba(0, 0, 0, .25);
+        transition: .3s ease
+    }
+
+    .seeds-card[_ngcontent-ifl-c1], .seeds-card[_ngcontent-ifl-c1]:hover {
+        height: 300px;
+        padding: 10%;
+        border-radius: 20px
+    }
+
+    .seeds-card[_ngcontent-ifl-c1]:hover {
+        background: rgba(122, 183, 116, .05);
+        box-shadow: 0 0 18px #7ab774
+    }
+
+    .seeds-card-header[_ngcontent-ifl-c1] {
+        display: flex;
+        align-items: baseline;
+        position: relative
+    }
+
+    .seeds-card-title[_ngcontent-ifl-c1] {
+        font-weight: 500;
+        font-size: 30px;
+        color: #0e6837;
+        margin: 0 20px;
+        line-height: 35px
+    }
+
+    .seeds-card-value[_ngcontent-ifl-c1] {
+        font-size: 16px;
+        color: #c7c7c7;
+        line-height: 33px
+    }
+
+    .seeds-card-action[_ngcontent-ifl-c1] {
+        position: absolute;
+        right: 0;
+        top: 19%;
+        color: #c7c7c7
+    }
+
+    .seeds-card-balance[_ngcontent-ifl-c1] {
+        font-weight: 500;
+        font-size: 50px;
+        color: #000;
+        margin: 10% 0 0
+    }
+
+    .seeds-card-balance-caption[_ngcontent-ifl-c1] {
+        font-weight: 500;
+        font-size: 18px;
+        color: #67676b
+    }
+
+    .seeds-card-balancereward[_ngcontent-ifl-c1] {
+        font-weight: 500;
+        font-size: 18px;
+        color: #c7c7c7
+    }
+
+    .seeds-card-balance-reward-value[_ngcontent-ifl-c1] {
+        font-weight: 500;
+        font-size: 18px;
+        color: #000
+    }</style>
+</head>
+<body>
+<script>
+    (function () {
+        const consolePrefix = '[ENTANDO-KEYCLOAK]';
+        const keycloakConfigEndpoint = '/keycloak.json';
+        let keycloakConfig;
+
+        function dispatchKeycloakEvent(eventType) {
+            console.info(consolePrefix, 'Dispatching', eventType, 'custom event');
+            return window.dispatchEvent(new CustomEvent('keycloak', {detail: {eventType}}));
+        };
+
+        function initKeycloak() {
+            const keycloak = new Keycloak(keycloakConfig);
+            keycloak.onReady = function () {
+                dispatchKeycloakEvent('onReady');
+            };
+            keycloak.onAuthSuccess = function () {
+                dispatchKeycloakEvent('onAuthSuccess');
+            };
+            keycloak.onAuthError = function () {
+                dispatchKeycloakEvent('onAuthError');
+            };
+            keycloak.onAuthRefreshSuccess = function () {
+                dispatchKeycloakEvent('onAuthRefreshSuccess');
+            };
+            keycloak.onAuthRefreshError = function () {
+                dispatchKeycloakEvent('onAuthRefreshError');
+            };
+            keycloak.onAuthLogout = function () {
+                dispatchKeycloakEvent('onAuthLogout');
+            };
+            keycloak.onTokenExpired = function () {
+                dispatchKeycloakEvent('onTokenExpired');
+            };
+
+            function onKeycloakInitialized(isAuthenticated) {
+                if (isAuthenticated) {
+                    console.info(consolePrefix, 'Keycloak initialized, user authenticated');
+                } else {
+                    console.info(consolePrefix, 'Keycloak initialized, user not authenticated');
+                }
+            };
+            window.entando = {
+                ...(window.entando || {}),
+                keycloak,
+            };
+            window.entando.keycloak
+                .init({
+                    onLoad: 'login-required',
+                    silentCheckSsoRedirectUri: 'http://localhost:8000/silent-check-sso.html',
+                    promiseType: 'native',
+                    enableLogging: true
+                })
+                .then(onKeycloakInitialized)
+                .catch(function (e) {
+                    console.error(e);
+                    console.error(consolePrefix, 'Failed to initialize Keycloak');
+                });
+        };
+
+        function onKeycloakScriptError(e) {
+            console.error(e);
+            console.error(consolePrefix, 'Failed to load keycloak.js script');
+        };
+
+        function addKeycloakScript(keycloakConfig) {
+            const script = document.createElement('script');
+            script.src = keycloakConfig['auth-server-url'] + '/js/keycloak.js';
+            script.async = true;
+            script.addEventListener('load', initKeycloak);
+            script.addEventListener('error', onKeycloakScriptError);
+            document.body.appendChild(script);
+        };
+        fetch(keycloakConfigEndpoint)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (config) {
+                keycloakConfig = config;
+                if (!keycloakConfig.clientId) {
+                    keycloakConfig.clientId = keycloakConfig.resource;
+                }
+                addKeycloakScript(keycloakConfig);
+            })
+            .catch(function (e) {
+                console.error(e);
+                console.error(consolePrefix, 'Failed to fetch Keycloak configuration');
+            });
+    })();</script>
+
+<div class="custom-navbar">
+    <!--Navbar-->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light">
+        <!-- Navbar brand -->
+        <a class="logo" href="http://germano.k8s-entando.org/entando-de-app/en/homepagesd.page"><img
+                src="/entando-de-app/cmsresources/standard-demo/static/img/seed-logo.svg"/></a><!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile"
+                aria-controls="navbar-mobile" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="navbar-mobile">
+            <!-- Links -->
+            <ul class="navbar-nav mr-auto">
+                <!-- Dropdown -->
+                <li class="nav-item"><a class="nav-link"
+                                        href="http://germano.k8s-entando.org/entando-de-app/en/homepagesd.page">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false"> Checking & Savings</a>
+                    <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                        <div class="dropdown-content-wrapper">
+                            <div class="row dropdown-wrapper">
+                                <div class="col-6 dropdown-col"><a class="checking"
+                                                                   href="http://germano.k8s-entando.org/entando-de-app/en/interest.page"><span>Interest Checking</span></a>
+                                    <div class="savings">High Yield Savings</div>
+                                </div>
+                                <div class="col-6 dropdown-right">
+                                    <div class="debit-cards">Debit Cards</div>
+                                    <div class="send-money">Send Money</div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-around dropdown-wrapper-footer">
+                                <div class="col-6 dropdown-footer-heading"> Company
+                                    <div class="row">
+                                        <div class="col-6 dropdown-footer-content">
+                                            <div>About</div>
+                                            <div>Service</div>
+                                            <div>Careers</div>
+                                            <div>Blog</div>
+                                        </div>
+                                        <div class="col-6 dropdown-footer-content">
+                                            <div>Media</div>
+                                            <div>Terms</div>
+                                            <div>Privacy</div>
+                                            <div>Cookies</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 dropdown-footer-heading"> Customers
+                                    <div class="row">
+                                        <div class="col-12 col-lg-6 dropdown-footer-content">
+                                            <div>Travel</div>
+                                            <div>Pricing</div>
+                                            <div>Account</div>
+                                            <div>Help</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item"><a class="nav-link"
+                                        href="http://germano.k8s-entando.org/entando-de-app/en/credit_card.page">Credit
+                    Cards</a></li>
+                <li class="nav-item"><a class="nav-link"
+                                        href="http://germano.k8s-entando.org/entando-de-app/en/seed_insurances.page">Insurances</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://germano.k8s-entando.org/entando-de-app/en/dashboard.page">My
+                        dashboard</a>
+                </li>
+            </ul>
+            <div class="d-block d-sm-block d-md-none">
+                <div class="btn-group login-group">
+                    <button type="button" class="btn login dropdown-toggle px-3" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false"> admin <span class="sr-only">admin</span>
+                    </button>
+                    <div class="dropdown-menu login-drop">
+                        <a class="dropdown-item" href="/app-builder/"> Administration </a> <a class="dropdown-item"
+                                                                                              href="http://germano.k8s-entando.org/entando-de-app/en/manage_users.page">
+                        Manage Users </a> <a class="dropdown-item"
+                                             onclick="window.entando.keycloak.logout()">
+                        Logout </a></div>
+                </div>
+
+                <a class="dropdown-item d-none d-sm-block d-md-none" admin <span class="sr-only">admin</span></a></div>
+        </div>
+        <div class="d-none d-lg-block d-xl-block">
+            <div class="btn-group login-group">
+                <button type="button" class="btn login dropdown-toggle px-3" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"> admin <span class="sr-only">admin</span>
+                </button>
+                <div class="dropdown-menu login-drop">
+                    <a class="dropdown-item" href="/app-builder/"> Administration </a> <a class="dropdown-item"
+                                                                                          href="http://germano.k8s-entando.org/entando-de-app/en/manage_users.page">
+                    Manage Users </a> <a class="dropdown-item"
+                                         onclick="window.entando.keycloak.logout()">
+                    Logout </a></div>
+            </div>
+
+            <a class="dropdown-item d-none d-sm-block d-md-none" admin <span class="sr-only">admin</span></a></div>
+        <!-- Collapsible content -->
+    </nav>
+    <div class="dashboard-container">
+        <h1 class="current-page">My dashboard</h1>
+        <div class="row">
+            <div id="chart-card" class="col-12 col-lg-4" style="display: none">
+                <div>
+                    <div>
+                        <div class="jss1">
+                            <sbd-charts-mfe/>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-lg-4"></div>
+            <div class="col-12 col-lg-4"></div>
+        </div>
+        <div class="row">
+        </div>
+        <div class="row">
+        </div>
+    </div>
+</div>
+
+<script>
+    function injectConfigIntoMfe() {
+        fetch('%PUBLIC_URL%/mfe-config.json').then(async response => {
+            const config = await response.text()
+            const mfeEl = document.getElementsByTagName('sbd-charts-mfe')[0]
+            mfeEl.setAttribute('config', config)
+        })
+    }
+    injectConfigIntoMfe()
+</script>
+
+</body>
+<script type="text/javascript" src="/entando-de-app/cmsresources/static/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+        src="/entando-de-app/cmsresources/static/js/mdb.min.js"></script>
+<script type="text/javascript"
+        src="/entando-de-app/cmsresources/static/js/datatables.min.js"></script>
+</html>

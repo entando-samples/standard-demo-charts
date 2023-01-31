@@ -1,0 +1,40 @@
+{
+  "microservices": [
+    {
+      "name": "sbd-charts-bff",
+      "stack": "spring-boot",
+      "healthCheckPath": "/api/health",
+      "roles": [
+        "role1"
+      ]
+    }
+  ],
+  "microfrontends": [
+    {
+      "name": "sbd-charts-mfe",
+      "customElement": "sbd-charts-mfe",
+      "stack": "react",
+      "type": "widget",
+      "group": "free",
+      "publicFolder": "public",
+      "titles": {
+        "en": "SBD Charts",
+        "it": "SBD Charts"
+      },
+      "apiClaims": [
+        {
+          "name": "be-api",
+          "type": "internal",
+          "serviceName": "sbd-charts-bff"
+        }
+      ]
+    }
+  ],
+  "svc": [
+    "keycloak"
+  ],
+  "name": "sbd-charts",
+  "version": "0.0.1",
+  "description": "Charts Showcase for Standard Banking Demo (BFF golang, MFE react)",
+  "type": "bundle"
+}
