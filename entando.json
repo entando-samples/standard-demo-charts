@@ -34,7 +34,7 @@
     "keycloak"
   ],
   "name": "standard-demo-charts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Chart Showcase for Standard Demo (BFF springboot, MFE react)",
   "type": "bundle"
 }

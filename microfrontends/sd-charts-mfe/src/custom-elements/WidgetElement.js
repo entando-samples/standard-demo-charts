@@ -26,7 +26,6 @@ class WidgetElement extends HTMLElement {
                     this.root = createRoot(this.mountPoint);
                     this.render();
                 }
-
             }
         })
     }
